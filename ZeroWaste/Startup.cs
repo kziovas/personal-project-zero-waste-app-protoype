@@ -34,12 +34,6 @@ namespace ZeroWaste
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ZeroWasteContext>();
 
-            services.AddDbContext<ZeroWasteContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ZeroWasteContext")));
-
-            services.AddDbContext<ZeroWasteContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ZeroWasteContext")));
-
 
         }
 
