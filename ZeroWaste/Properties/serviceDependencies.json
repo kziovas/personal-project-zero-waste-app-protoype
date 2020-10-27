@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql4": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql5": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql6": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    },
+    "mssql7": {
+      "type": "mssql",
+      "connectionId": "ZeroWasteContext"
+    }
+  }
+}
