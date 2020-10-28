@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace ZeroWaste.Models
 
         public DateTime PublicationDate { get; set; }
 
-        [Column(TypeName = "nvarchar(MAX)")]
+        [MaxLength]
         public int MainText { get; set; }
 
         public string PictureLink { get; set; }

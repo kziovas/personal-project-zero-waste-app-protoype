@@ -25,7 +25,7 @@ namespace ZeroWaste.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Allergy>>> GetAllergy()
         {
-            return await _context.Allergies.ToListAsync();
+            return await _context.Allergies.Include(a=>a.Keywords).ToListAsync();
         }
 
         // GET: api/Allergies/5

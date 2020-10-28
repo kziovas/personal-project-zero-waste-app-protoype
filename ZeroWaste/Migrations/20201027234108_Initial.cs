@@ -48,7 +48,23 @@ namespace ZeroWaste.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NutritionalType",
+                name: "News",
+                columns: table => new
+                {
+                    ID = table.Column<long>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    PublicationDate = table.Column<DateTime>(nullable: false),
+                    MainText = table.Column<int>(nullable: false),
+                    PictureLink = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NutritionalTypes",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
@@ -57,21 +73,7 @@ namespace ZeroWaste.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NutritionalType", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TodoItems",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    IsComplete = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TodoItems", x => x.Id);
+                    table.PrimaryKey("PK_NutritionalTypes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,7 +221,7 @@ namespace ZeroWaste.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "Ingredients",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
@@ -231,9 +233,9 @@ namespace ZeroWaste.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.ID);
+                    table.PrimaryKey("PK_Ingredients", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Ingredient_ZWMembers_ZWMemberID",
+                        name: "FK_Ingredients_ZWMembers_ZWMemberID",
                         column: x => x.ZWMemberID,
                         principalTable: "ZWMembers",
                         principalColumn: "ID",
@@ -241,7 +243,7 @@ namespace ZeroWaste.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipie",
+                name: "Recipies",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -259,15 +261,15 @@ namespace ZeroWaste.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recipie", x => x.Id);
+                    table.PrimaryKey("PK_Recipies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipie_ZWMembers_ZWMemberID",
+                        name: "FK_Recipies_ZWMembers_ZWMemberID",
                         column: x => x.ZWMemberID,
                         principalTable: "ZWMembers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Recipie_ZWMembers_ZWMemberID1",
+                        name: "FK_Recipies_ZWMembers_ZWMemberID1",
                         column: x => x.ZWMemberID1,
                         principalTable: "ZWMembers",
                         principalColumn: "ID",
@@ -275,7 +277,7 @@ namespace ZeroWaste.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Keyword",
+                name: "Keywords",
                 columns: table => new
                 {
                     ID = table.Column<long>(nullable: false)
@@ -284,38 +286,45 @@ namespace ZeroWaste.Migrations
                     AllergyID = table.Column<long>(nullable: true),
                     IngredientID = table.Column<long>(nullable: true),
                     IngredientID1 = table.Column<long>(nullable: true),
+                    NewsID = table.Column<long>(nullable: true),
                     RecipieId = table.Column<long>(nullable: true),
                     ZWMemberID = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Keyword", x => x.ID);
+                    table.PrimaryKey("PK_Keywords", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Keyword_Allergies_AllergyID",
+                        name: "FK_Keywords_Allergies_AllergyID",
                         column: x => x.AllergyID,
                         principalTable: "Allergies",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Keyword_Ingredient_IngredientID",
+                        name: "FK_Keywords_Ingredients_IngredientID",
                         column: x => x.IngredientID,
-                        principalTable: "Ingredient",
+                        principalTable: "Ingredients",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Keyword_Ingredient_IngredientID1",
+                        name: "FK_Keywords_Ingredients_IngredientID1",
                         column: x => x.IngredientID1,
-                        principalTable: "Ingredient",
+                        principalTable: "Ingredients",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Keyword_Recipie_RecipieId",
+                        name: "FK_Keywords_News_NewsID",
+                        column: x => x.NewsID,
+                        principalTable: "News",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Keywords_Recipies_RecipieId",
                         column: x => x.RecipieId,
-                        principalTable: "Recipie",
+                        principalTable: "Recipies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Keyword_ZWMembers_ZWMemberID",
+                        name: "FK_Keywords_ZWMembers_ZWMemberID",
                         column: x => x.ZWMemberID,
                         principalTable: "ZWMembers",
                         principalColumn: "ID",
@@ -337,15 +346,15 @@ namespace ZeroWaste.Migrations
                 {
                     table.PrimaryKey("PK_RecipieIngredient", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_RecipieIngredient_Ingredient_IngredientID",
+                        name: "FK_RecipieIngredient_Ingredients_IngredientID",
                         column: x => x.IngredientID,
-                        principalTable: "Ingredient",
+                        principalTable: "Ingredients",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RecipieIngredient_Recipie_RecipieId",
+                        name: "FK_RecipieIngredient_Recipies_RecipieId",
                         column: x => x.RecipieId,
-                        principalTable: "Recipie",
+                        principalTable: "Recipies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -364,15 +373,15 @@ namespace ZeroWaste.Migrations
                 {
                     table.PrimaryKey("PK_RecipieNutritionalType", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_RecipieNutritionalType_NutritionalType_NutrionalTypeID",
+                        name: "FK_RecipieNutritionalType_NutritionalTypes_NutrionalTypeID",
                         column: x => x.NutrionalTypeID,
-                        principalTable: "NutritionalType",
+                        principalTable: "NutritionalTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RecipieNutritionalType_Recipie_RecipieId",
+                        name: "FK_RecipieNutritionalType_Recipies_RecipieId",
                         column: x => x.RecipieId,
-                        principalTable: "Recipie",
+                        principalTable: "Recipies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -420,44 +429,39 @@ namespace ZeroWaste.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredient_ZWMemberID",
-                table: "Ingredient",
+                name: "IX_Ingredients_ZWMemberID",
+                table: "Ingredients",
                 column: "ZWMemberID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Keyword_AllergyID",
-                table: "Keyword",
+                name: "IX_Keywords_AllergyID",
+                table: "Keywords",
                 column: "AllergyID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Keyword_IngredientID",
-                table: "Keyword",
+                name: "IX_Keywords_IngredientID",
+                table: "Keywords",
                 column: "IngredientID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Keyword_IngredientID1",
-                table: "Keyword",
+                name: "IX_Keywords_IngredientID1",
+                table: "Keywords",
                 column: "IngredientID1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Keyword_RecipieId",
-                table: "Keyword",
+                name: "IX_Keywords_NewsID",
+                table: "Keywords",
+                column: "NewsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Keywords_RecipieId",
+                table: "Keywords",
                 column: "RecipieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Keyword_ZWMemberID",
-                table: "Keyword",
+                name: "IX_Keywords_ZWMemberID",
+                table: "Keywords",
                 column: "ZWMemberID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipie_ZWMemberID",
-                table: "Recipie",
-                column: "ZWMemberID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Recipie_ZWMemberID1",
-                table: "Recipie",
-                column: "ZWMemberID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipieIngredient_IngredientID",
@@ -478,6 +482,16 @@ namespace ZeroWaste.Migrations
                 name: "IX_RecipieNutritionalType_RecipieId",
                 table: "RecipieNutritionalType",
                 column: "RecipieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recipies_ZWMemberID",
+                table: "Recipies",
+                column: "ZWMemberID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recipies_ZWMemberID1",
+                table: "Recipies",
+                column: "ZWMemberID1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -498,16 +512,13 @@ namespace ZeroWaste.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Keyword");
+                name: "Keywords");
 
             migrationBuilder.DropTable(
                 name: "RecipieIngredient");
 
             migrationBuilder.DropTable(
                 name: "RecipieNutritionalType");
-
-            migrationBuilder.DropTable(
-                name: "TodoItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -519,13 +530,16 @@ namespace ZeroWaste.Migrations
                 name: "Allergies");
 
             migrationBuilder.DropTable(
-                name: "Ingredient");
+                name: "News");
 
             migrationBuilder.DropTable(
-                name: "NutritionalType");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Recipie");
+                name: "NutritionalTypes");
+
+            migrationBuilder.DropTable(
+                name: "Recipies");
 
             migrationBuilder.DropTable(
                 name: "ZWMembers");

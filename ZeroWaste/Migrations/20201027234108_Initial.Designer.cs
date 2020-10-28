@@ -9,7 +9,7 @@ using ZeroWaste.Data;
 namespace ZeroWaste.Migrations
 {
     [DbContext(typeof(ZeroWasteContext))]
-    [Migration("20201027215119_Initial")]
+    [Migration("20201027234108_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,7 +255,7 @@ namespace ZeroWaste.Migrations
 
                     b.HasIndex("ZWMemberID");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("ZeroWaste.Models.Keyword", b =>
@@ -271,6 +271,9 @@ namespace ZeroWaste.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long?>("IngredientID1")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("NewsID")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("RecipieId")
@@ -290,11 +293,36 @@ namespace ZeroWaste.Migrations
 
                     b.HasIndex("IngredientID1");
 
+                    b.HasIndex("NewsID");
+
                     b.HasIndex("RecipieId");
 
                     b.HasIndex("ZWMemberID");
 
-                    b.ToTable("Keyword");
+                    b.ToTable("Keywords");
+                });
+
+            modelBuilder.Entity("ZeroWaste.Models.News", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MainText")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PictureLink")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("PublicationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("ZeroWaste.Models.NutritionalType", b =>
@@ -308,7 +336,7 @@ namespace ZeroWaste.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("NutritionalType");
+                    b.ToTable("NutritionalTypes");
                 });
 
             modelBuilder.Entity("ZeroWaste.Models.Recipie", b =>
@@ -353,7 +381,7 @@ namespace ZeroWaste.Migrations
 
                     b.HasIndex("ZWMemberID1");
 
-                    b.ToTable("Recipie");
+                    b.ToTable("Recipies");
                 });
 
             modelBuilder.Entity("ZeroWaste.Models.RecipieIngredient", b =>
@@ -405,23 +433,6 @@ namespace ZeroWaste.Migrations
                     b.HasIndex("RecipieId");
 
                     b.ToTable("RecipieNutritionalType");
-                });
-
-            modelBuilder.Entity("ZeroWaste.Models.TodoItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsComplete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TodoItems");
                 });
 
             modelBuilder.Entity("ZeroWaste.Models.ZWMember", b =>
@@ -528,6 +539,10 @@ namespace ZeroWaste.Migrations
                     b.HasOne("ZeroWaste.Models.Ingredient", null)
                         .WithMany("OtherNames")
                         .HasForeignKey("IngredientID1");
+
+                    b.HasOne("ZeroWaste.Models.News", null)
+                        .WithMany("Keywords")
+                        .HasForeignKey("NewsID");
 
                     b.HasOne("ZeroWaste.Models.Recipie", null)
                         .WithMany("Keywords")
